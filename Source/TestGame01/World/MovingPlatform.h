@@ -18,9 +18,11 @@ class TESTGAME01_API AMovingPlatform : public AStaticMeshActor
 
 	protected:
 	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+
+
 	
 	public:
-	
 	UPROPERTY(EditAnywhere, Category = "Params")
 	float Speed;
 	

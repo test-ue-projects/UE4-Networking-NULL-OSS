@@ -8,7 +8,8 @@ AMovingPlatform::AMovingPlatform()
 	PrimaryActorTick.bCanEverTick = true;
 	SetMobility(EComponentMobility::Movable);
 
-	Speed = 5.f;
+
+	Speed = 10.f;
 }
 
 void AMovingPlatform::Tick(float DeltaTime)
@@ -19,10 +20,22 @@ void AMovingPlatform::Tick(float DeltaTime)
 	{
 	
 		FVector Location = GetActorLocation();
-
 		Location += FVector(Speed*DeltaTime, 0, 0);
-
 		SetActorLocation(Location);
 	}
 	
+}
+
+void AMovingPlatform::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if(HasAuthority())
+	{
+		//просто параметры, могут быть и в конструкторе
+		// не обязательно на бегин плей
+		SetReplicates(true);
+		SetReplicateMovement(true);
+	}
+
 }
