@@ -21,9 +21,12 @@ class TESTGAME01_API AMovingPlatform : public AStaticMeshActor
 	virtual void BeginPlay() override;
 
 
-	
+
 	public:
 	UPROPERTY(EditAnywhere, Category = "Params")
 	float Speed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Params", Meta = (MakeEditWidget = true))
+	FVector TargetLocation;
 	
 };

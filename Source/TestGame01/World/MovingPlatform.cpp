@@ -2,6 +2,7 @@
 
 
 #include "MovingPlatform.h"
+#include "Kismet/KismetMathLibrary.h"
 
 AMovingPlatform::AMovingPlatform()
 {
@@ -20,8 +21,22 @@ void AMovingPlatform::Tick(float DeltaTime)
 	{
 	
 		FVector Location = GetActorLocation();
-		Location += FVector(Speed*DeltaTime, 0, 0);
+		//переводит локальные координаты в мировые
+		FVector GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
+		//
+		FVector Direction = (GlobalTargetLocation - Location).GetSafeNormal();
+		Location += Speed*DeltaTime*Direction;
 		SetActorLocation(Location);
+
+		///////////////////////////my var2////////////////////////////////
+		// FVector StartLocation = GetActorLocation();	
+		//
+		// // Delta Move, Clamp so we do not over shoot. так как таргет локейшн в локльныйх координатах (тоесть Старт локайшн для таргет локейшена всегда буедт 0 0 0, мы можем не высчитывать вектор мировой который был бы разница между таргет и  старт локейшном)
+		// const FVector	DeltaMove = TargetLocation * FMath::Clamp<float>(DeltaTime * Speed, 0.f, 1.f);
+		//
+		// SetActorLocation (StartLocation + DeltaMove);
+
+		
 	}
 	
 }
@@ -36,6 +51,8 @@ void AMovingPlatform::BeginPlay()
 		// не обязательно на бегин плей
 		SetReplicates(true);
 		SetReplicateMovement(true);
+
+		
 	}
 
 }
