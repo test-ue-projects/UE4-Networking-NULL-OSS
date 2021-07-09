@@ -28,5 +28,13 @@ class TESTGAME01_API AMovingPlatform : public AStaticMeshActor
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "Params", Meta = (MakeEditWidget = true))
 	FVector TargetLocation;
+
+	FVector GlobalStartLocataion;
+	FVector GlobalTargetLocation;
+	
+	FVector TempGlobalStartLocataion;
+	FVector TempGlobalTargetLocation;
+
+
 	
 };
