@@ -8,6 +8,8 @@
 #include "GameFramework/Actor.h"
 #include "PlatformTrigger.generated.h"
 
+class AMovingPlatform;
+
 UCLASS()
 class TESTGAME01_API APlatformTrigger : public AActor
 {
@@ -25,6 +27,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, Category = "Setups")
+	TArray<AMovingPlatform*> PlstformsList;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* MeshComp = nullptr;

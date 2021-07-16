@@ -20,7 +20,8 @@ class TESTGAME01_API AMovingPlatform : public AStaticMeshActor
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
-
+	UPROPERTY(EditAnywhere)
+	int ActiveTriggers = 1;		 
 
 	public:
 	UPROPERTY(EditAnywhere, Category = "Params")
@@ -35,6 +36,6 @@ class TESTGAME01_API AMovingPlatform : public AStaticMeshActor
 	FVector TempGlobalStartLocataion;
 	FVector TempGlobalTargetLocation;
 
-
-	
+	void AddActiveTrigger();
+	void RemoveActiveTrigger();
 };
