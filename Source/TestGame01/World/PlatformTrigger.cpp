@@ -18,9 +18,12 @@ APlatformTrigger::APlatformTrigger()
 
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(FName("Floor")); 
     MeshComp->SetupAttachment(TriggerVolume);
-	
 
-	TriggerVolume->OnComponentBeginOverlap( FComponentBeginOverlapSignature, UPrimitiveComponent, OnComponentBeginOverlap, UPrimitiveComponent*, OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);   
+	//Bind function to Overlap event
+	  //TODO: DONT FORGET TO ENABLE Generate Overlsp Events checkbox  in Blueprint
+	TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &APlatformTrigger::OnOverlapBegin);
+	TriggerVolume->OnComponentEndOverlap.AddDynamic(this, &APlatformTrigger::OnOverlapEnd);
+
 
 }
 
@@ -28,6 +31,7 @@ APlatformTrigger::APlatformTrigger()
 void APlatformTrigger::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }
 
@@ -36,5 +40,17 @@ void APlatformTrigger::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void APlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("begin overlap"));
+}
+
+void APlatformTrigger::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Warning, TEXT("end overlap"));
 }
 
