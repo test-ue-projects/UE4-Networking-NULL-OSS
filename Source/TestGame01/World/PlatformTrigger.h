@@ -32,4 +32,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UBoxComponent* TriggerVolume = nullptr;
 
+	UFUNCTION()
+	void OnBeginOverlap()
+
 };
