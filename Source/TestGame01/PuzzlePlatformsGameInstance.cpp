@@ -2,6 +2,7 @@
 
 
 #include "PuzzlePlatformsGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 {
@@ -15,10 +16,12 @@ void UPuzzlePlatformsGameInstance::Init()
 
 void UPuzzlePlatformsGameInstance::Host()
 {
-	if(GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("World delta for current frame equals %f"), GetWorld()->TimeSeconds));
-	}
+	UWorld* World = GetWorld();
+	if(!ensure(World!=nullptr)){return;}
+
+	//on call of thos function - specify the server as a listener server, makes the client which is calling this function as a server 
+	World->ServerTravel("/Game/Static/Maps/ThirdPersonExampleMap?listen");
+
 
 }
 
@@ -28,4 +31,6 @@ void UPuzzlePlatformsGameInstance::Join(const FString& Address)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Join to %s address"), *Address));
 	}
+
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
