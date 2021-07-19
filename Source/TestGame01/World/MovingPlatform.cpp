@@ -16,6 +16,8 @@ AMovingPlatform::AMovingPlatform()
 void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	
 	if(ActiveTriggers > 0)
 	{
 		if(HasAuthority())

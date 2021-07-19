@@ -20,6 +20,7 @@ class TESTGAME01_API AMovingPlatform : public AStaticMeshActor
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
+	//if active trigger is > 0 , then the platform  moves. By adding or removing actove trigger counter we can switch platform movement 
 	UPROPERTY(EditAnywhere)
 	int ActiveTriggers = 1;		 
 
