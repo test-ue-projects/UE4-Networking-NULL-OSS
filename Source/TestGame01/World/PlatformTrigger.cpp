@@ -24,16 +24,12 @@ APlatformTrigger::APlatformTrigger()
 	  //TODO: DONT FORGET TO ENABLE Generate Overlsp Events checkbox  in Blueprint
 	TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &APlatformTrigger::OnOverlapBegin);
 	TriggerVolume->OnComponentEndOverlap.AddDynamic(this, &APlatformTrigger::OnOverlapEnd);
-
-
 }
 
 // Called when the game starts or when spawned
 void APlatformTrigger::BeginPlay()
 {
-	Super::BeginPlay();
-
-	
+	Super::BeginPlay();	
 }
 
 // Called every frame
@@ -46,8 +42,6 @@ void APlatformTrigger::Tick(float DeltaTime)
 void APlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("begin overlap"));
-
 	for (auto Platform : PlstformsList)
 	{
 		Platform->AddActiveTrigger();
@@ -57,7 +51,6 @@ void APlatformTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActo
 void APlatformTrigger::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("end overlap"));
 	for (auto Platform : PlstformsList)
 	{
 		Platform->RemoveActiveTrigger();

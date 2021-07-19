@@ -19,5 +19,12 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance
 	UPuzzlePlatformsGameInstance();
 
 	virtual void Init() override;
+
+	UFUNCTION(Exec)
+	void Host(); // создасть консольную команду Host
+
+	UFUNCTION(Exec)
+	void Join(const FString& Address); // создасть консольную команду Host
+
 	
 };

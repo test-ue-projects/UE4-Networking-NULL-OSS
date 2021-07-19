@@ -5,10 +5,27 @@
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Constructor")) ;
+
 }
 
 void UPuzzlePlatformsGameInstance::Init()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Init")) ;
+
+}
+
+void UPuzzlePlatformsGameInstance::Host()
+{
+	if(GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("World delta for current frame equals %f"), GetWorld()->TimeSeconds));
+	}
+
+}
+
+void UPuzzlePlatformsGameInstance::Join(const FString& Address)
+{
+	if(GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Join to %s address"), *Address));
+	}
 }
