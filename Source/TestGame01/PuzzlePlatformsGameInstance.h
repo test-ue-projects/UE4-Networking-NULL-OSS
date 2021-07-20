@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+
+
 #include "PuzzlePlatformsGameInstance.generated.h"
 
 /**
@@ -24,7 +26,5 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance
 	void Host(); // создасть консольную команду Host
 
 	UFUNCTION(Exec)
-	void Join(const FString& Address); // создасть консольную команду Host
-
-	
+	void Join(const FString& Address); // создасть консольную команду Host	          
 };

@@ -3,10 +3,17 @@
 
 #include "PuzzlePlatformsGameInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "UObject/ConstructorHelpers.h"
+#include "World/PlatformTrigger.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 {
-
+	// set default pawn class to our Blueprinted character
+	ConstructorHelpers::FClassFinder<APlatformTrigger> PlatformTrigger(TEXT("/Game/Blueprints/MyPlatformTrigger"));
+	if (PlatformTrigger.Class != NULL)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *PlatformTrigger.Class->GetName());
+	}		 
 }
 
 void UPuzzlePlatformsGameInstance::Init()
