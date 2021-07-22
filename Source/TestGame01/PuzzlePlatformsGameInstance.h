@@ -28,7 +28,7 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance
 	UUserWidget* Menu;		
 	
 	UFUNCTION(BlueprintCallable, Exec)
-	UUserWidget* LoadMenu(); // создасть консольную команду Host
+	void LoadMenu(); // создасть консольную команду Host
 
 	UFUNCTION(Exec)
 	void Host(); // создасть консольную команду Host

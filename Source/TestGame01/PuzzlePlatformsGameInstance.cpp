@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "World/PlatformTrigger.h"
+#include "GameFramework/PlayerController.h"
 #include "Blueprint/UserWidget.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
@@ -22,17 +23,25 @@ void UPuzzlePlatformsGameInstance::Init()
 	UE_LOG(LogTemp, Warning, TEXT("On init %s"), *MenuClass->GetName());		  
 }
 
-UUserWidget* UPuzzlePlatformsGameInstance::LoadMenu()
+void UPuzzlePlatformsGameInstance::LoadMenu()
 {
-	if(!ensure(MenuClass!=nullptr)){return nullptr;}
+	if(!ensure(MenuClass!=nullptr)){return;}
 	Menu = CreateWidget(this, MenuClass);
 
-	if(!ensure(Menu!=nullptr)){return nullptr;}
-
-
+	if(!ensure(Menu!=nullptr)){return;}
 	Menu->AddToViewport();
 
-	return Menu;
+	//setting preparations to set input mode and mouse coursor
+	FInputModeUIOnly InputModeData;
+	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
+	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+
+	APlayerController* PlayerController = GetFirstLocalPlayerController(GetWorld());
+	if(!ensure(PlayerController!=nullptr)){return;}
+
+	PlayerController->SetInputMode(InputModeData);
+	PlayerController->bShowMouseCursor = true;
+
 }
 
 void UPuzzlePlatformsGameInstance::Host()
