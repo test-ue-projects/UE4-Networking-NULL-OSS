@@ -5,20 +5,34 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
 #include "World/PlatformTrigger.h"
+#include "Blueprint/UserWidget.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 {
-	// set default pawn class to our Blueprinted character
-	ConstructorHelpers::FClassFinder<APlatformTrigger> PlatformTrigger(TEXT("/Game/Blueprints/MyPlatformTrigger"));
-	if (PlatformTrigger.Class != NULL)
+	// set menu class class to our Blueprinted character
+	ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/MenuSystem/WB_MainMenu"));
+	if (MenuBPClass.Class != NULL)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *PlatformTrigger.Class->GetName());
+		MenuClass = MenuBPClass.Class;
 	}		 
 }
 
 void UPuzzlePlatformsGameInstance::Init()
 {
+	UE_LOG(LogTemp, Warning, TEXT("On init %s"), *MenuClass->GetName());		  
+}
 
+UUserWidget* UPuzzlePlatformsGameInstance::LoadMenu()
+{
+	if(!ensure(MenuClass!=nullptr)){return nullptr;}
+	Menu = CreateWidget(this, MenuClass);
+
+	if(!ensure(Menu!=nullptr)){return nullptr;}
+
+
+	Menu->AddToViewport();
+
+	return Menu;
 }
 
 void UPuzzlePlatformsGameInstance::Host()

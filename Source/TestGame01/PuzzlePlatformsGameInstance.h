@@ -8,6 +8,9 @@
 
 #include "PuzzlePlatformsGameInstance.generated.h"
 
+
+class UUserWidget;
+
 /**
  * 
  */
@@ -22,9 +25,18 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance
 
 	virtual void Init() override;
 
+	UUserWidget* Menu;		
+	
+	UFUNCTION(BlueprintCallable, Exec)
+	UUserWidget* LoadMenu(); // создасть консольную команду Host
+
 	UFUNCTION(Exec)
 	void Host(); // создасть консольную команду Host
 
 	UFUNCTION(Exec)
-	void Join(const FString& Address); // создасть консольную команду Host	          
+	void Join(const FString& Address); // создасть консольную команду Host
+
+	/** The Menu widget class used by players. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Classes)
+	TSubclassOf<UUserWidget> MenuClass;
 };
