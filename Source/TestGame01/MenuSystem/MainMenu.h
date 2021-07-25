@@ -14,9 +14,13 @@ class TESTGAME01_API UMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
-	public:
+protected:
 	virtual void NativeConstruct() override;
 
+	virtual bool Initialize() override;
+
+public:
+	
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* MainMenuTxt = nullptr;
 
@@ -27,5 +31,9 @@ class TESTGAME01_API UMainMenu : public UUserWidget
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UButton* JoinBtn= nullptr;
 	
-	
+	UFUNCTION()
+	void HostServer();
+
+	UFUNCTION()
+	void JoinServer();
 };
