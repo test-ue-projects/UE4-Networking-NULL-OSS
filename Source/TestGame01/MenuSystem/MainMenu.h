@@ -29,6 +29,10 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* JoinBtn= nullptr;
 
+	// the name of variable and the name of the button in the UMG must be the same, for bind to work correctly
+	UPROPERTY(meta = (BindWidget))
+	class UWidgetSwitcher* JoinBtn= nullptr;
+
 	
 	IMenuInterface* MenuInterface;
 
