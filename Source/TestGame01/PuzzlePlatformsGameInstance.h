@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MenuSystem/MenuInterface.h"
 #include "Engine/GameInstance.h"
 
 
@@ -15,7 +16,7 @@ class UUserWidget;
  * 
  */
 UCLASS()
-class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance
+class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance, public IMenuInterface
 {
 	GENERATED_BODY()
 
@@ -25,13 +26,14 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance
 
 	virtual void Init() override;
 
-	UUserWidget* Menu;		
+	class UMainMenu* Menu;
+
 	
 	UFUNCTION(BlueprintCallable, Exec)
 	void LoadMenu(); // создасть консольную команду Host
 
 	UFUNCTION(Exec)
-	void Host(); // создасть консольную команду Host
+	void Host(); // создасть консольную команду Host, также так как мы насоедовались от интерфейса в котором есть функция с таким же именем то теперь это относится к интерфейсной ыункции
 
 	UFUNCTION(Exec)
 	void Join(const FString& Address); // создасть консольную команду Host
@@ -39,4 +41,6 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance
 	/** The Menu widget class used by players. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Classes)
 	TSubclassOf<UUserWidget> MenuClass;
+
+	
 };

@@ -7,11 +7,12 @@
 #include "World/PlatformTrigger.h"
 #include "GameFramework/PlayerController.h"
 #include "Blueprint/UserWidget.h"
+#include "MenuSystem/MainMenu.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 {
-	// set menu class class to our Blueprinted character
-	ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/MenuSystem/WB_MainMenu"));
+	// using BP in c++ - set menu class class to our Blueprinted character. There is na example in Default Game Mode cal
+	ConstructorHelpers::FClassFinder<UMainMenu> MenuBPClass(TEXT("/Game/MenuSystem/WB_MainMenu"));
 	if (MenuBPClass.Class != NULL)
 	{
 		MenuClass = MenuBPClass.Class;
@@ -25,34 +26,36 @@ void UPuzzlePlatformsGameInstance::Init()
 
 void UPuzzlePlatformsGameInstance::LoadMenu()
 {
+	//double check that the BP exists
 	if(!ensure(MenuClass!=nullptr)){return;}
-	Menu = CreateWidget(this, MenuClass);
+
+	
+	Menu = CreateWidget<UMainMenu>(this, MenuClass);
 
 	if(!ensure(Menu!=nullptr)){return;}
 	Menu->AddToViewport();
 
-	//setting preparations to set input mode and mouse coursor
-	FInputModeUIOnly InputModeData;
-	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	Menu->Setup();
 
-	APlayerController* PlayerController = GetFirstLocalPlayerController(GetWorld());
-	if(!ensure(PlayerController!=nullptr)){return;}
-
-	PlayerController->SetInputMode(InputModeData);
-	PlayerController->bShowMouseCursor = true;
+	//сохраняет в меню указатель на этот конкрентынй гейм инстанс, потому что ГМ знает о существовании Меню, а мены не занет о существовании ПазлПлатформГМ но знает про совой интерфейс
+	Menu->SetMenuInterface(this);
 
 }
 
 void UPuzzlePlatformsGameInstance::Host()
 {
 	UWorld* World = GetWorld();
+	
 	if(!ensure(World!=nullptr)){return;}
+
+	//так как это консольная команда и может быть вызвана из командной стороки то Menu не обязательно должен присутствоватб
+	if(Menu != nullptr)
+	{
+		Menu->TierDown();
+	}
 
 	//on call of thos function - specify the server as a listener server, makes the client which is calling this function as a server 
 	World->ServerTravel("/Game/Static/Maps/ThirdPersonExampleMap?listen");
-
-
 }
 
 void UPuzzlePlatformsGameInstance::Join(const FString& Address)

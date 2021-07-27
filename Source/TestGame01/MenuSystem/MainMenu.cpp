@@ -31,13 +31,55 @@ bool UMainMenu::Initialize()
 	return true;
 }
 
+void UMainMenu::SetMenuInterface(IMenuInterface* InMenuInterface)
+{
+	//this-> to remove ambiguity
+	this->MenuInterface = InMenuInterface;    
+}
+
 void UMainMenu::HostServer()
 {
 	UE_LOG(LogTemp, Warning, TEXT("HostServer pressed"));
+	
+	if(MenuInterface != nullptr)
+	{
+		MenuInterface->Host();
+	}
 }
 
 void UMainMenu::JoinServer()
 {
 	UE_LOG(LogTemp, Warning, TEXT("JoinServer pressed"));
+}
+
+void UMainMenu::Setup()
+{
+	UWorld* World = GetWorld();
+	if(!ensure(World!=nullptr)){return;}
+	
+	//setting preparations to set input mode and mouse coursor
+    	FInputModeUIOnly InputModeData;
+    	InputModeData.SetWidgetToFocus(this->TakeWidget());
+    	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    
+    	APlayerController* PlayerController = World->GetFirstPlayerController();
+    	if(!ensure(PlayerController!=nullptr)){return;}
+    
+    	PlayerController->SetInputMode(InputModeData);
+    	PlayerController->bShowMouseCursor = true;
+
+}
+
+void UMainMenu::TierDown()
+{
+	UWorld* World = GetWorld();
+	if(!ensure(World!=nullptr)){return;}
+	
+	///setting preparations to set input mode and mouse coursor
+	FInputModeGameOnly InputModeData;	
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+	if(!ensure(PlayerController!=nullptr)){return;}
+	PlayerController->SetInputMode(InputModeData);
+	PlayerController->bShowMouseCursor = false;
 }
 	
