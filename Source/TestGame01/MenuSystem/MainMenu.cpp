@@ -5,6 +5,8 @@
 #include "Components/TextBlock.h"
 #include "Internationalization/Text.h"
 #include "Components/Button.h"
+#include "Components/WidgetSwitcher.h"
+#include "Components/EditableText.h"
 
 void UMainMenu::NativeConstruct()
 {
@@ -14,6 +16,7 @@ void UMainMenu::NativeConstruct()
 	if(MainMenuTxt != nullptr)
 	{
 		MainMenuTxt->SetText(FText::FromString("Mein Menu"));
+		
 	}
 }
 
@@ -25,8 +28,14 @@ bool UMainMenu::Initialize()
 	if(!ensure(HostBtn!=nullptr)) return false;  //double check the pointers
 	HostBtn->OnPressed.AddDynamic(this, &UMainMenu::HostServer);
 	
+	if(!ensure(JoinMenuBtn!=nullptr)) return false;  //double check the pointers
+	JoinMenuBtn->OnPressed.AddDynamic(this, &UMainMenu::OpenJoinMenu);
+
 	if(!ensure(JoinBtn!=nullptr)) return false;  //double check the pointers
 	JoinBtn->OnPressed.AddDynamic(this, &UMainMenu::JoinServer);
+
+	if(!ensure(CancelJoinMenuBtn!=nullptr)) return false;  //double check the pointers
+	CancelJoinMenuBtn->OnPressed.AddDynamic(this, &UMainMenu::OpenMainMenu);
 	
 	return true;
 }
@@ -49,7 +58,23 @@ void UMainMenu::HostServer()
 
 void UMainMenu::JoinServer()
 {
-	UE_LOG(LogTemp, Warning, TEXT("JoinServer pressed"));
+	FString IpAddr = IpAddrArea->GetText().ToString();	 
+	
+	if(MenuInterface != nullptr && IpAddr != "")
+	{
+		
+		MenuInterface->Join(IpAddr);
+	}
+}
+
+void UMainMenu::OpenJoinMenu()
+{
+	MenuSwitch->SetActiveWidget(JoinMenu);	
+}
+
+void UMainMenu::OpenMainMenu()
+{
+	MenuSwitch->SetActiveWidget(MainMenuArea);
 }
 
 void UMainMenu::Setup()

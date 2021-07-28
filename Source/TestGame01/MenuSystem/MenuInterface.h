@@ -23,5 +23,9 @@ class TESTGAME01_API IMenuInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
+	//host a server
 	virtual void Host() = 0;
+
+	//join to the IP
+	virtual void Join(const FString& Address) = 0;
 };

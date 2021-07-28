@@ -60,9 +60,15 @@ void UPuzzlePlatformsGameInstance::Host()
 
 void UPuzzlePlatformsGameInstance::Join(const FString& Address)
 {
-	if(GEngine)
+	/*if(GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Join to %s address"), *Address));
+	}*/
+
+	//так как это консольная команда и может быть вызвана из командной стороки то Menu не обязательно должен присутствоватб
+	if(Menu != nullptr)
+	{
+		Menu->TierDown();
 	}
 
 	APlayerController* PlayerController = GetFirstLocalPlayerController(GetWorld());
@@ -70,5 +76,5 @@ void UPuzzlePlatformsGameInstance::Join(const FString& Address)
 
 	PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 
-	//UGameplayStatics::GetPlayerController(GetWorld(), 0)->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
