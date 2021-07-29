@@ -27,10 +27,13 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance, public
 	virtual void Init() override;
 
 	class UMainMenu* Menu;
-
+	class UExitMenu* QuitMenu;
 	
 	UFUNCTION(BlueprintCallable, Exec)
 	void LoadMenu(); // создасть консольную команду Host
+
+	UFUNCTION(BlueprintCallable, Exec)
+	void QuitMenuCall(); // создасть консольную команду Host
 
 	UFUNCTION(Exec)
 	void Host(); // создасть консольную команду Host, также так как мы насоедовались от интерфейса в котором есть функция с таким же именем то теперь это относится к интерфейсной ыункции
@@ -41,6 +44,11 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance, public
 	/** The Menu widget class used by players. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Classes)
 	TSubclassOf<UUserWidget> MenuClass;
+
+	/** The Menu widget class used by players. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Classes)
+	TSubclassOf<UUserWidget> QuitMenuClass;
+	
 
 	
 };

@@ -3,15 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
-#include "MenuInterface.h"
+#include "MenuWidget.h"
 #include "MainMenu.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TESTGAME01_API UMainMenu : public UUserWidget
+class TESTGAME01_API UMainMenu : public UMenuWidget
 {
 	GENERATED_BODY()
 
@@ -54,9 +53,6 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UEditableText* IpAddrArea= nullptr; 
 
-	
-	IMenuInterface* MenuInterface;
-
 protected:
 	
 	virtual void NativeConstruct() override;
@@ -64,9 +60,6 @@ protected:
 	virtual bool Initialize() override;
 
 public:
-
-	//connect this widget with other object that implements this interface
-	void SetMenuInterface(IMenuInterface* InMenuInterface);
 	
 	UFUNCTION()
 	void HostServer();
@@ -81,13 +74,5 @@ public:
 	//switch to main menu
 	UFUNCTION()
 	void OpenMainMenu();
-
-
-	//set show Cursor and UIOnly mode
-	void Setup();
-
-	//set hide Cursor and GameOnly mode	 
-	void TierDown();
-
 
 };

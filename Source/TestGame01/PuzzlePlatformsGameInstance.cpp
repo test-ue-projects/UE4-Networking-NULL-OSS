@@ -8,6 +8,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Blueprint/UserWidget.h"
 #include "MenuSystem/MainMenu.h"
+#include "MenuSystem/ExitMenu.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 {
@@ -16,6 +17,12 @@ UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 	if (MenuBPClass.Class != NULL)
 	{
 		MenuClass = MenuBPClass.Class;
+	}
+
+	ConstructorHelpers::FClassFinder<UExitMenu> QuitMenuBPClass(TEXT("/Game/MenuSystem/WB_QuitMenu"));
+	if (QuitMenuBPClass.Class != NULL)
+	{
+		QuitMenuClass = QuitMenuBPClass.Class;
 	}		 
 }
 
@@ -40,6 +47,23 @@ void UPuzzlePlatformsGameInstance::LoadMenu()
 	//сохраняет в меню указатель на этот конкрентынй гейм инстанс, потому что ГМ знает о существовании Меню, а мены не занет о существовании ПазлПлатформГМ но знает про совой интерфейс
 	Menu->SetMenuInterface(this);
 
+}
+
+void UPuzzlePlatformsGameInstance::QuitMenuCall()
+{
+	//double check that the BP exists
+	if(!ensure(QuitMenuClass!=nullptr)){return;}
+
+	
+	QuitMenu = CreateWidget<UExitMenu>(this, QuitMenuClass);
+
+	if(!ensure(QuitMenu!=nullptr)){return;}
+	QuitMenu->AddToViewport();
+
+	QuitMenu->Setup();
+
+	//сохраняет в меню указатель на этот конкрентынй гейм инстанс, потому что ГМ знает о существовании Меню, а мены не занет о существовании ПазлПлатформГМ но знает про совой интерфейс
+	QuitMenu->SetMenuInterface(this);           
 }
 
 void UPuzzlePlatformsGameInstance::Host()
