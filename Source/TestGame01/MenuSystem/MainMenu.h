@@ -51,7 +51,11 @@ private:
 	
 	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly
 	UPROPERTY(meta = (BindWidget))
-	class UEditableText* IpAddrArea= nullptr; 
+	class UEditableText* IpAddrArea= nullptr;
+	
+	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly
+	UPROPERTY(meta = (BindWidget))
+	class UButton* ExitBtn=nullptr;
 
 protected:
 	
@@ -74,5 +78,9 @@ public:
 	//switch to main menu
 	UFUNCTION()
 	void OpenMainMenu();
+
+	//exit the game completely
+	UFUNCTION()	 
+	void CloseGame();
 
 };

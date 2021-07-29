@@ -9,6 +9,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MenuSystem/MainMenu.h"
 #include "MenuSystem/ExitMenu.h"
+#include "Kismet/GameplayStatics.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance()
 {
@@ -100,5 +101,24 @@ void UPuzzlePlatformsGameInstance::Join(const FString& Address)
 
 	PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+	//UGameplayStatics::GetPlayerController(GetWorld(), 0)->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+}
+
+
+void UPuzzlePlatformsGameInstance::QuitGame()
+{
+	 //UGameplayStatics::OpenLevel(GetWorld(), "/Game/Static/Maps/MenuLevel");
+	
+	APlayerController* PlayerController = GetFirstLocalPlayerController(GetWorld());
+	if(!ensure(PlayerController!=nullptr)){return;}
+
+	PlayerController->ClientTravel("/Game/Static/Maps/MenuLevel", ETravelType::TRAVEL_Absolute);
+}
+
+void UPuzzlePlatformsGameInstance::ExitGame()
+{
+	APlayerController* PlayerController = GetFirstLocalPlayerController(GetWorld());
+	if(!ensure(PlayerController!=nullptr)){return;}
+
+	PlayerController->ConsoleCommand("Exit");
 }

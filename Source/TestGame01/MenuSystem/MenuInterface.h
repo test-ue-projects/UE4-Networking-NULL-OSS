@@ -28,4 +28,10 @@ public:
 
 	//join to the IP
 	virtual void Join(const FString& Address) = 0;
+
+	//go to start main menu
+	virtual void QuitGame()=0;
+										 
+	//close the game completely
+	virtual  void ExitGame() = 0;
 };

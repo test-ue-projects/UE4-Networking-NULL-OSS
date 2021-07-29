@@ -36,19 +36,25 @@ class TESTGAME01_API UPuzzlePlatformsGameInstance : public UGameInstance, public
 	void QuitMenuCall(); // создасть консольную команду Host
 
 	UFUNCTION(Exec)
-	void Host(); // создасть консольную команду Host, также так как мы насоедовались от интерфейса в котором есть функция с таким же именем то теперь это относится к интерфейсной ыункции
+	void Host() override; // создасть консольную команду Host, также так как мы насоедовались от интерфейса в котором есть функция с таким же именем то теперь это относится к интерфейсной ыункции
 
 	UFUNCTION(Exec)
-	void Join(const FString& Address); // создасть консольную команду Host
+	void Join(const FString& Address) override; // создасть консольную команду Host
 
-	/** The Menu widget class used by players. */
+	/** The  widget class used by players. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Classes)
 	TSubclassOf<UUserWidget> MenuClass;
 
-	/** The Menu widget class used by players. */
+	/** The  widget class used by players. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Classes)
 	TSubclassOf<UUserWidget> QuitMenuClass;
-	
 
-	
+	//quit to main menu
+	UFUNCTION(Exec)	 
+	void QuitGame() override;
+
+
+	//close the game completly
+	UFUNCTION(Exec)	
+	void ExitGame() override;
 };
