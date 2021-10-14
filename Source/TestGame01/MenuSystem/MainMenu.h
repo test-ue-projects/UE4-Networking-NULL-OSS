@@ -14,6 +14,10 @@ class TESTGAME01_API UMainMenu : public UMenuWidget
 {
 	GENERATED_BODY()
 
+public:
+	// конструктор для нахождения блупринт виджета
+	UMainMenu(); //const FObjectInitializer & ObjectInitializer
+
 private:
 
 	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly
@@ -47,7 +51,6 @@ private:
 	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly
 	UPROPERTY(meta = (BindWidget))
 	class UWidget* MainMenuArea= nullptr;
-
 	
 	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly
 	UPROPERTY(meta = (BindWidget))
@@ -57,6 +60,24 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* ExitBtn=nullptr;
 
+	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly. кнопка относящаяяся к ServerList функционалу
+	UPROPERTY(meta = (BindWidget))
+	class UButton* JoinSessionBtn_1=nullptr;
+
+	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly. Кнопка относящаяяся к функционалу ввода прямого IP
+	UPROPERTY(meta = (BindWidget))
+	class UWidget* JoinSessionMenu= nullptr;
+	
+	// the name of variable and the name of the widget in the UMG must be the same, for bind to work correctly
+	UPROPERTY(meta = (BindWidget))
+	class UPanelWidget* ServerList = nullptr;
+
+	// блупринтовый класс для сервер роу виджета.
+	TSubclassOf<class UServerRow> ServerRowClass;
+
+	//session index
+	TOptional<int32> SelectedIndex;
+	
 protected:
 	
 	virtual void NativeConstruct() override;
@@ -64,10 +85,10 @@ protected:
 	virtual bool Initialize() override;
 
 public:
-	
 	UFUNCTION()
 	void HostServer();
 
+	//подсодинения по прямому IP
 	UFUNCTION()
 	void JoinServer();
 
@@ -82,5 +103,15 @@ public:
 	//exit the game completely
 	UFUNCTION()	 
 	void CloseGame();
+
+	//присоединение по выбору сервера из списка
+	UFUNCTION()	 
+	void JoinSession();
+
+	//
+	void SetServerList(TArray<FString>);
+
+	//выбор индекса сессии-сервера
+	void SelectIndex(int32 Index);
 
 };

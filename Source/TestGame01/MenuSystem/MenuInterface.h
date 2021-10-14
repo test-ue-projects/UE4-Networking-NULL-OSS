@@ -25,13 +25,21 @@ public:
 
 	//host a server
 	virtual void Host() = 0;
-
-	//join to the IP
-	virtual void Join(const FString& Address) = 0;
+	
+	//connect to server by typing IP - NOT IMPLEMENTED
+	virtual void JoinIP(const FString&) = 0;
+	
+	//join to the selected session
+	virtual void Join(int32 Index) = 0;
 
 	//go to start main menu
 	virtual void QuitGame()=0;
 										 
 	//close the game completely
 	virtual  void ExitGame() = 0;
+
+	//update server list in join menu
+	virtual  void RefreshServerList() = 0;
+
+
 };
